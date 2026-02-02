@@ -1,0 +1,21 @@
+{
+  "name": "kazvee-blog",
+  "version": "1.0.0",
+  "license": "MIT",
+  "devDependencies": {
+    "@11ty/eleventy": "^2.0.1",
+    "@11ty/eleventy-navigation": "^0.3.5",
+    "@11ty/eleventy-plugin-rss": "^1.1.1",
+    "concurrently": "^8.2.1",
+    "luxon": "^3.4.2",
+    "stylus": "^0.59.0"
+  },
+  "scripts": {
+    "build:stylus": "stylus --compress ./stylus/ --out ./static/css/",
+    "watch:stylus": "stylus --watch ./stylus/ --out ./static/css/",
+    "build:11ty": "eleventy",
+    "watch:11ty": "eleventy --serve",
+    "build": "npm run build:stylus && npm run build:11ty",
+    "dev": "concurrently -n stylus,11ty \"npm:watch:stylus\" \"npm:watch:11ty\""
+  }
+}

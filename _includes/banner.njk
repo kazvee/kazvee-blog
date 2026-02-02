@@ -1,0 +1,27 @@
+<div class="banner" id="quote-banner" style="text-align: center;"></div>
+
+<script>
+const quotes = [
+  `⚠️✨ Dev Site ✨⚠️`,
+  `🔥💻 Dev Site 💻🔥`,
+];
+
+let i = 0;
+const banner = document.getElementById('quote-banner');
+
+function showQuote() {
+  // Fade out
+  banner.style.opacity = 0;
+  setTimeout(() => {
+    banner.innerHTML = quotes[i].replace(/\n/g, "<br>");
+    banner.style.opacity = 1;
+    i = (i + 1) % quotes.length;
+  }, 500); // Wait for fade-out before changing text
+}
+
+// Show the first quote immediately
+showQuote();
+
+// Rotate every 10 seconds
+setInterval(showQuote, 10000);
+</script>

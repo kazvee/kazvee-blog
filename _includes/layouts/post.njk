@@ -1,0 +1,34 @@
+---
+layout: layouts/base.njk
+---
+
+<div class="container-sm">
+  <h1>{{ title }}</h1>
+
+  {% if updated and updated != date %}
+    <p class="post-meta" style="color: #B6688A; font-size: 0.9rem; font-style: italic; margin-top: 0.25rem; margin-bottom: 1rem;">
+      {{ date | date('MMMM d, yyyy') }} (Updated {{ updated | date('MMMM d, yyyy') }})
+    </p>
+  {% else %}
+    <p class="post-meta" style="color: #B6688A; font-size: 0.9rem; font-style: italic; margin-top: 0.25rem; margin-bottom: 1rem;">
+      {{ date | date('MMMM d, yyyy') }}
+    </p>
+  {% endif %}
+
+  {{ content | safe }}
+
+  <br><hr>
+
+  {% if not hideTagsList %}
+    <b>Tags: </b>
+    {% for tag in tags %}
+      {% if tag != 'post' %}
+        <a href="{{ '/tags/' | url }}{{ tag | slug }}">{{ tag }}</a>
+        {%- if not loop.last %}, {% endif %}
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+
+  <br><br>
+  <a href="{{ '/' | url }}">&larr; Back home</a>
+</div>
