@@ -3,11 +3,11 @@ body
   line-height 1.5
   font-family default_font
   color text_color
-  background-color bg_color
+  background linear-gradient(to bottom, bg_color_gradient_start, bg_color_gradient_end)
   min-height 100vh
   display grid
   grid-template-rows auto 1fr auto
 
   &.dark
     color text_color_dark
-    background-color bg_color_dark
+    background linear-gradient(to bottom, bg_color_gradient_start_dark, bg_color_gradient_end_dark)
