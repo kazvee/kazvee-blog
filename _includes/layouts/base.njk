@@ -64,5 +64,93 @@
       })
     })
   </script>
+
+<div id="cookie-banner" style="
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: rgba(190, 24, 93, 0.75);
+  backdrop-filter: blur(10px);
+  color: #fff;
+  padding: 1rem;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  z-index: 1000;
+  box-shadow: 0 -2px 8px rgba(0,0,0,0.15);
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+">
+  <p style="margin: 0 0 1rem; max-width: 80%;">
+    This site uses cookies so I can tell if anyone scrolls past the header. 😄 Please accept cookies to help me keep improving this site. ❤️
+  </p>
+  <div style="margin-left: 1rem;">
+    <button id="accept-cookies" style="
+      background-color: green;
+      color: #fff;
+      border: 1px solid #fff;
+      border-radius: 4px;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      margin-right: 0.5rem;
+      font-weight: 600;
+    ">Accept Cookies</button>
+    <button id="decline-cookies" style="
+      background-color: transparent;
+      color: #fff;
+      border: 1px solid #fff;
+      border-radius: 4px;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      font-weight: 600;
+    ">Decline Cookies</button>
+  </div>
+</div>
+
+<script>
+(function() {
+  const banner = document.getElementById('cookie-banner');
+  const consent = localStorage.getItem('cookie_consent');
+
+  function loadPostHog() {
+    if (window.posthog) return; // avoid loading twice
+    const script = document.createElement('script');
+    script.src = 'https://us-assets.i.posthog.com/static/array.js';
+    script.async = true;
+    script.crossOrigin = 'anonymous';
+    script.onload = () => {
+      posthog.init('phc_fS8id3L1tcXRmcm14zACwCNdtCEBYZUqX9LfgKoCOpq', {
+        api_host: 'https://us.i.posthog.com',
+        defaults: '2025-11-30',
+        person_profiles: 'always'
+      });
+    };
+    document.head.appendChild(script);
+  }
+
+  // Show banner only if user hasn’t decided yet
+  if (!consent || consent === 'undecided') {
+    banner.style.display = 'flex';
+  } else if (consent === 'yes') {
+    loadPostHog();
+  }
+
+  // Handle Accept
+  document.getElementById('accept-cookies').addEventListener('click', () => {
+    localStorage.setItem('cookie_consent','yes');
+    banner.style.display = 'none';
+    loadPostHog();
+  });
+
+  // Handle Decline
+  document.getElementById('decline-cookies').addEventListener('click', () => {
+    localStorage.setItem('cookie_consent','no');
+    banner.style.display = 'none';
+    // Do NOT load PostHog
+  });
+})();
+</script>
+
 </body>
 </html>
