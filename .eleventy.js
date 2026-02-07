@@ -1,6 +1,8 @@
 const { DateTime } = require('luxon');
 const navigationPlugin = require('@11ty/eleventy-navigation');
 const rssPlugin = require('@11ty/eleventy-plugin-rss');
+const markdownIt = require("markdown-it");
+const markdownItAttrs = require("markdown-it-attrs");
 
 module.exports = (config) => {
   config.addPlugin(navigationPlugin);
@@ -10,6 +12,32 @@ module.exports = (config) => {
   config.addPassthroughCopy('static');
 
   config.setDataDeepMerge(true);
+
+  const md = markdownIt({
+    html: true,
+    linkify: true,
+    typographer: true,
+  }).use(markdownItAttrs);
+
+  md.renderer.rules.link_open = function (tokens, idx, options, env, self) {
+    const token = tokens[idx];
+    const hrefIndex = token.attrIndex("href");
+
+    if (hrefIndex >= 0) {
+      const href = token.attrs[hrefIndex][1];
+
+      // Only external links
+      if (href.startsWith("http") && !href.includes("kazvee.com")) {
+        token.attrSet("target", "_blank");
+        token.attrSet("rel", "noopener");
+      }
+    }
+
+    return self.renderToken(tokens, idx, options);
+  };
+
+
+  config.setLibrary("md", md);
 
   config.addFilter("htmlDateString", (dateObj) => {
     return DateTime.fromJSDate(dateObj, { zone: "utc" }).toFormat("yyyy-LL-dd");
