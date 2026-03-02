@@ -19,6 +19,7 @@
     "dev": "concurrently -n stylus,11ty \"npm:watch:stylus\" \"npm:watch:11ty\""
   },
   "dependencies": {
+    "dotenv": "^17.3.1",
     "markdown-it": "^14.1.0",
     "markdown-it-attrs": "^4.3.1"
   }
