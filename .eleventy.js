@@ -3,8 +3,18 @@ const navigationPlugin = require('@11ty/eleventy-navigation');
 const rssPlugin = require('@11ty/eleventy-plugin-rss');
 const markdownIt = require("markdown-it");
 const markdownItAttrs = require("markdown-it-attrs");
+require('dotenv').config();
 
 module.exports = (config) => {
+  require('dotenv').config();
+
+  config.addGlobalData('POSTHOG_KEY', process.env.POSTHOG_KEY);
+
+  config.addGlobalData('UMAMI_URL', process.env.UMAMI_URL);
+  config.addGlobalData('UMAMI_WEBSITE_ID', process.env.UMAMI_WEBSITE_ID);
+
+  config.addGlobalData('CLOUDFLARE_TOKEN', process.env.CLOUDFLARE_TOKEN);
+
   config.addPlugin(navigationPlugin);
   config.addPlugin(rssPlugin);
 

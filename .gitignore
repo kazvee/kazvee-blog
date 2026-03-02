@@ -17,3 +17,6 @@ yarn-error.log*
 Thumbs.db
 static/css/main.css
 static/css/main.css
+
+# Environment variables
+.env
