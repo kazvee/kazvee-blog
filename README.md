@@ -18,6 +18,8 @@ A demo can be viewed ✨[HERE](https://blog.kazvee.com/)✨
 * [Stylus](https://stylus-lang.com/)  
 * Vanilla JavaScript + small plugins (dark mode toggle)  
 * [Eleventy RSS Plugin](https://www.11ty.dev/docs/plugins/rss/)  
+* [Umami](https://umami.is/) (privacy-friendly analytics)  
+* [Cloudflare Web Analytics](https://www.cloudflare.com/products/web-analytics/)  
 
 ## Installation
 * Fork this repository to your own GitHub account
