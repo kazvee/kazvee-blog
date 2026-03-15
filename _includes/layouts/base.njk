@@ -9,55 +9,14 @@
   <link rel="shortcut icon" href="{{ '/static/img/favicon.ico' | url }}" type="image/x-icon">
   <link rel="stylesheet" href="{{ '/static/css/main.css' | url }}" media="all">
 
+  <script async defer src="{{ UMAMI_URL }}" data-website-id="{{ UMAMI_WEBSITE_ID }}"></script>
+
 </head>
 <body>
   {% include 'components/navbar.njk' %}
   {# {% include "banner.njk" %} #}
   {{ content | safe }}
   {% include 'components/footer.njk' %}
-
-  <div id="cookie-banner" style="
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    background: rgba(190, 24, 93, 0.75);
-    backdrop-filter: blur(10px);
-    color: #fff;
-    padding: 1rem;
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    z-index: 1000;
-    box-shadow: 0 -2px 8px rgba(0,0,0,0.15);
-    font-family: 'Inter', sans-serif;
-    font-size: 1rem;
-  ">
-    <p style="margin: 0 0 1rem; max-width: 80%;">
-      This site uses cookies so I can tell if anyone scrolls past the header. 😄 Please accept cookies to help me keep improving this site. ❤️ See <strong><a href="https://kazvee.com" target="_blank" rel="noopener" style="text-decoration:none; color:#fff;">main site</a></strong> for privacy policy.
-    </p>
-    <div style="margin-left: 1rem;">
-      <button id="accept-cookies" style="
-        background-color: green;
-        color: #fff;
-        border: 1px solid #fff;
-        border-radius: 4px;
-        padding: 0.5rem 1rem;
-        cursor: pointer;
-        margin-right: 0.5rem;
-        font-weight: 600;
-      ">Accept Cookies</button>
-      <button id="decline-cookies" style="
-        background-color: transparent;
-        color: #fff;
-        border: 1px solid #fff;
-        border-radius: 4px;
-        padding: 0.5rem 1rem;
-        cursor: pointer;
-        font-weight: 600;
-      ">Decline Cookies</button>
-    </div>
-  </div>
 
   <script>
   (function() {
@@ -104,100 +63,7 @@
   })();
   </script>
 
-  <script>
-  (function() {
-    const banner = document.getElementById('cookie-banner');
-    const consent = localStorage.getItem('cookie_consent') || 'undecided';
-
-    function removePostHogCookies() {
-      document.cookie.split(';').forEach(c => {
-        if (c.trim().startsWith('ph_')) {
-          document.cookie = c.trim() + ';expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/';
-        }
-      });
-    }
-
-    function initAnalytics(allowCookies) {
-
-      if (!window.posthog) return;
-      document.addEventListener('click', e => {
-        const target = e.target.closest('a');
-        if (!target || !target.href) return;
-        if (!target.href.startsWith(window.location.origin)) {
-          posthog.capture('external_link_click', { href: target.href, text: target.textContent });
-        }
-      });
-
-      const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting && entry.target.id) {
-            posthog.capture('section_view', { section: entry.target.id });
-          }
-        });
-      }, { threshold: 0.5 });
-      document.querySelectorAll('section[id]').forEach(sec => observer.observe(sec));
-
-      if (!document.querySelector('#umami-analytics')) {
-        const u = document.createElement('script');
-        u.id = 'umami-analytics';
-        u.defer = true;
-        u.src = '{{ UMAMI_URL }}';
-        u.setAttribute('data-website-id', '{{ UMAMI_WEBSITE_ID }}');
-        document.head.appendChild(u);
-      }
-
-      if (allowCookies && !document.querySelector('#cf-analytics')) {
-        const cf = document.createElement('script');
-        cf.id = 'cf-analytics';
-        cf.src = 'https://static.cloudflareinsights.com/beacon.min.js';
-        cf.defer = true;
-        cf.setAttribute('data-cf-beacon', `{"token":"{{ CLOUDFLARE_TOKEN }}"}`);
-        document.head.appendChild(cf);
-      }
-    }
-
-    function acceptCookies() {
-      localStorage.setItem('cookie_consent', 'yes');
-      banner.style.display = 'none';
-      posthog.opt_in_capturing();
-      initAnalytics(true);
-    }
-
-    function declineCookies() {
-      localStorage.setItem('cookie_consent', 'no');
-      banner.style.display = 'none';
-      posthog.opt_out_capturing();
-      removePostHogCookies();
-      initAnalytics(false);
-    }
-
-    const s = document.createElement('script');
-    s.src = 'https://us-assets.i.posthog.com/static/array.js';
-    s.async = true;
-    s.onload = () => {
-      posthog.init('{{ POSTHOG_KEY }}', {
-        api_host: 'https://us.i.posthog.com',
-        autocapture: true,
-        capture_pageview: true,
-        cookieless_mode: 'on_reject',
-        mask_all_text: true,
-        mask_all_element_attributes: true
-      });
-
-      if (posthog.get_explicit_consent_status() === 'pending') {
-        banner.style.display = 'flex';
-      } else if (posthog.get_explicit_consent_status() === 'opted_in') {
-        initAnalytics(true);
-      } else {
-        initAnalytics(false);
-      }
-    };
-    document.body.appendChild(s);
-
-    document.getElementById('accept-cookies').addEventListener('click', acceptCookies);
-    document.getElementById('decline-cookies').addEventListener('click', declineCookies);
-  })();
-  </script>
-
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "{{ CLOUDFLARE_TOKEN }}"}'></script>
+  
 </body>
 </html>

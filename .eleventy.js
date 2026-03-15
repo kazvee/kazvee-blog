@@ -8,8 +8,6 @@ require('dotenv').config();
 module.exports = (config) => {
   require('dotenv').config();
 
-  config.addGlobalData('POSTHOG_KEY', process.env.POSTHOG_KEY);
-
   config.addGlobalData('UMAMI_URL', process.env.UMAMI_URL);
   config.addGlobalData('UMAMI_WEBSITE_ID', process.env.UMAMI_WEBSITE_ID);
 
