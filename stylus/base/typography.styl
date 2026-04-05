@@ -8,6 +8,14 @@ p
   margin 0.75rem 0
   font-weight 400
 
+p code, li code
+  padding 0.15em 0.35em
+  border-radius 4px
+  background rgba(0, 0, 0, 0.05)
+
+  body.dark &
+    background rgba(255, 255, 255, 0.08)
+
 for i in (1..6)
   h{i}
     text_scale_size (7 - i)
@@ -27,3 +35,22 @@ a
 
 hr
   border-color rgba(0, 0, 0, 0.1)
+
+code
+  font-family monospace
+  font-size 1em
+
+pre
+  white-space pre-wrap
+  overflow-wrap break-word
+  padding 1rem
+  border-radius 6px
+
+  background code_bg_light
+  color code_text_light
+  border 1px solid primary_color
+
+  body.dark &
+    background code_bg_dark
+    color code_text_dark
+    border 1px solid primary_color_dark
