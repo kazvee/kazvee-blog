@@ -1,6 +1,6 @@
 ---
 title: Taking Virtualmin for a Spin
-description: 
+description: Notes from installing and configuring Virtualmin on a VPS, including setup and basic optimization.
 canonical: https://kazvee.com/blog/virtualmin-setup/
 date: 2026-06-14
 updated:
