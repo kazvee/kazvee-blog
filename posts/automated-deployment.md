@@ -1,7 +1,6 @@
 ---
 title: Automating Project Deployment with WSL2, SSH, and Rsync
 description: Building a single-command automated deployment workflow for my portfolio site.
-canonical: https://kazvee.com/blog/automated-deployment/
 date: 2026-04-19
 updated: 
 tags:

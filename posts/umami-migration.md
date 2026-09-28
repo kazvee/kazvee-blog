@@ -1,7 +1,6 @@
 ---
 title: Umami Migration Guide (Docker + PostgreSQL + Caddy)
 description: Migrating a self-hosted Umami instance from one VPS to another while preserving analytics data.
-canonical: https://kazvee.com/blog/umami-migration/
 date: 2026-05-03
 updated:
 tags:

@@ -1,7 +1,6 @@
 ---
 title: Self-Hosting Umami Analytics with Docker, PostgreSQL, and Caddy
 description: Practical setup notes for self-hosting Umami Analytics with Docker, PostgreSQL, and Caddy.
-canonical: https://kazvee.com/blog/umami-analytics-setup/
 date: 2026-04-05
 updated: 
 tags:

@@ -1,7 +1,6 @@
 ---
 title: Pair Programming
 description: Musings on Collaborative Coding
-canonical: https://kazvee.com/blog/pair-programming/
 date: 2023-11-19
 updated: 
 tags:
